@@ -18,6 +18,7 @@ class AgeCalculatorCommand extends Command
             ->setDescription("Calculates inputted age and tells if person is adult")
             ->setHelp('Enter birth date YYYY-MM-DD and parameter --adult to show if person is adult')
             ->addArgument('date', InputArgument::REQUIRED, 'Birthday of person')
+            ->addOption("adult", $shortcut = null, $mode = null, $description = 'Option shows if person is adult', $default = null )
         ;
     }
 
@@ -31,9 +32,16 @@ class AgeCalculatorCommand extends Command
         $output->writeln([
             "",
             "<$format_years>  ! [NOTE] I am $age old</>",
-        "",
-        "<$format_answer>  Am I an adult?   ----- $answer  !!</>",
             ""
         ]);
+
+        if($input->getOption('adult'))
+        {
+            $output->writeln([
+                "",
+                "<$format_answer>  Am I an adult?   ----- $answer  !!</>",
+                ""
+            ]);
+        }
     }
 }
