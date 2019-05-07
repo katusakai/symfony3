@@ -6,9 +6,8 @@ namespace App\Service;
 
 class AdultChecker
 {
-    private $answer_word;
-    private $background_color;
     private $ageCalculator;
+    private $answer_word;
     private $year_plural;
 
     /**
@@ -33,10 +32,8 @@ class AdultChecker
     {
         if ($this->ageCalculator->yearsCalculator() > 18){
             $this->answer_word = "YES";
-            $this->background_color = "fg=black;bg=green";
         } else {
             $this->answer_word = "NO";
-            $this->background_color = "fg=white;bg=red";
         }
 
         if ($this->ageCalculator->yearsCalculator() > 1){
@@ -58,14 +55,6 @@ class AdultChecker
     public function getAnswerWord()
     {
         return $this->answer_word;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBackgroundColor()
-    {
-        return $this->background_color;
     }
 
 

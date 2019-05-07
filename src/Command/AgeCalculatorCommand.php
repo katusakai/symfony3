@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use DateTime;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class AgeCalculatorCommand extends Command
 {
@@ -29,26 +30,21 @@ class AgeCalculatorCommand extends Command
     {
         $born_date = $input->getArgument('date');
         $years = new AgeCalculator(new DateTime($born_date));
-        $age = $years->yearsCalculator();
-
+        $io = new SymfonyStyle($input, $output);
         $adult_checker = new AdultChecker($years);
-        $answer = $adult_checker->getAnswerWord();
-        $format_answer = $adult_checker->getBackgroundColor();
-        $years_plural = $adult_checker->getYearPlural();
 
-
-        $output->writeln([
-            "",
-            "<fg=yellow>  ! [NOTE] I am $age $years_plural old</>",
-            ""
-        ]);
+        $io->note('I am ' . $years->yearsCalculator() . " ". $adult_checker->getYearPlural() . " old");
 
         if($input->getOption('adult'))
         {
-            $output->writeln([
-                "<$format_answer>  Am I an adult?   ----- $answer  !!</>",
-                ""
-            ]);
+            $text = "Am I an adult?   -----   " . $adult_checker->getAnswerWord() . " !!!";
+
+            if($adult_checker->getAnswerWord() === "YES"){
+                $io->success($text);
+            } else {
+                $io->warning($text);
+            }
+
         }
     }
 }
