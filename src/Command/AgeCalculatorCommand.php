@@ -24,6 +24,16 @@ class AgeCalculatorCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $age = $input->getArgument('date');
-        $output->writeln("! [NOTE] I am $age old");
+        $answer = "yes";
+        $format_years = "fg=yellow";
+        $format_answer = "fg=black;bg=green";
+
+        $output->writeln([
+            "",
+            "<$format_years>  ! [NOTE] I am $age old</>",
+        "",
+        "<$format_answer>  Am I an adult?   ----- $answer  !!</>",
+            ""
+        ]);
     }
 }
